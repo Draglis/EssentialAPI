@@ -1,0 +1,6 @@
+name: EssentialAPI
+main: Draglis/EssentialAPI
+src-namespace-prefix: EssentialAPI
+version: 0.0.1
+api-version: 4.0.0
+author: Draglis
