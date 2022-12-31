@@ -2,12 +2,14 @@
 
 namespace Draglis;
 
+use Draglis\command\CommandSender;
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 
 class EssentialAPI extends PluginBase {
 
     private static EssentialAPI $instance;
-
+    private static Server $server;
 
     protected function onEnable(): void {
         self::$instance = $this;
@@ -23,5 +25,6 @@ class EssentialAPI extends PluginBase {
     public static function getInstance(): EssentialAPI {
         return self::$instance;
     }
+
 
 }
