@@ -6,12 +6,22 @@ use pocketmine\plugin\PluginBase;
 
 class EssentialAPI extends PluginBase {
 
-    protected function onEnable(): void {
+    private static EssentialAPI $instance;
 
+
+    protected function onEnable(): void {
+        self::$instance = $this;
     }
 
     protected function onDisable(): void {
 
+    }
+
+    /**
+     * @return EssentialAPI
+     */
+    public static function getInstance(): EssentialAPI {
+        return self::$instance;
     }
 
 }
