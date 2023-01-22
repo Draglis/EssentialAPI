@@ -3,7 +3,6 @@
 namespace Draglis\entity;
 
 use Closure;
-use Draglis\entity\ai\component\EntityComponent;
 use Draglis\entity\ambient\EntityBat;
 use Draglis\entity\animal\allay\Allay;
 use Draglis\entity\animal\axolotl\Axolotl;
@@ -29,16 +28,18 @@ use Draglis\entity\animal\EntityWolf;
 use Draglis\entity\animal\frog\Tadpole;
 use Draglis\entity\animal\goat\Goat;
 use Draglis\entity\animal\horse\EntityHorseAbstract;
+use Draglis\EssentialAPI;
 use Draglis\item\CustomItemFactory;
 use Draglis\item\egg\CustomSpawnEgg;
 use Draglis\utils\NBT;
+use pocketmine\entity\Entity;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\scheduler\CancelTaskException;
+use pocketmine\scheduler\Task;
 use ReflectionException;
 use RuntimeException;
 
 class EntityManager {
-
-    private static CompoundTag $componentTag;
 
     /**
      * @throws ReflectionException
@@ -69,6 +70,7 @@ class EntityManager {
         $this->register(EntitySquid::class, EntitySquid::getNetworkTypeId(), "Squid");
         $this->register(EntityTurtle::class, EntityTurtle::getNetworkTypeId(), "Turtle");
         $this->register(EntityWolf::class, EntityWolf::getNetworkTypeId(), "Wolf");
+
     }
 
     /**
@@ -108,34 +110,5 @@ class EntityManager {
             "Wolf" => EntityWolf::class,
         ];
     }
-
-    public static function addComponent(string $key, $value): void {
-        $propertiesTag = self::$componentTag->getCompoundTag("components");
-        $tag = NBT::getTagType($value);
-        if($tag === null) {
-            throw new RuntimeException("Failed to get tag type for property with key " . $key);
-        }
-        $propertiesTag->setTag($key, $tag);
-    }
-
-    public static function addComponentGroup(string $key, $value): void {
-        $propertiesTag = self::$componentTag->getCompoundTag("component_groups");
-        $tag = NBT::getTagType($value);
-        if($tag === null) {
-            throw new RuntimeException("Failed to get tag type for property with key " . $key);
-        }
-        $propertiesTag->setTag($key, $tag);
-    }
-
-    public static function getComponents(): CompoundTag {
-        return self::$componentTag;
-    }
-
-    private static array $components1;
-
-    public static function addComponent1(EntityComponent $component): void {
-        self::$components1[$component->getName()] = $component;
-    }
-
 
 }
