@@ -3,39 +3,24 @@
 
 namespace Draglis\entity\animal;
 
-use Draglis\entity\ai\goal\FloatGoal;
-use Draglis\entity\ai\goal\GoalSelector;
-use Draglis\entity\ai\goal\PanicGoal;
+use Draglis\entity\ai\goal\PlayerNearGoal;
+use Draglis\entity\EntityLiving;
 use pocketmine\entity\EntitySizeInfo;
-use pocketmine\entity\Living;
 use pocketmine\entity\Location;
-use pocketmine\event\entity\EntityDamageEvent;
+use pocketmine\item\VanillaItems;
 use pocketmine\nbt\tag\CompoundTag;
 
-class EntityCow extends Living {
+class EntityCow extends EntityLiving {
 
-    private GoalSelector $goalSelector;
-
-    public function __construct(Location $location, ?CompoundTag $nbt = null)
-    {
+    public function __construct(Location $location, ?CompoundTag $nbt = null) {
         parent::__construct($location, $nbt);
-        $this->goalSelector = new GoalSelector();
-        $this->registerGoals();
     }
 
-    private function registerGoals(): void {
-        $this->goalSelector->addGoal(0, new FloatGoal($this, 0.085));
-        $this->goalSelector->addGoal(1, new PanicGoal($this, 1));
+    protected function registerGoals(): void {
     }
-
-    public function onUpdate(int $currentTick): bool {
-        $this->goalSelector->tick();
-        return parent::onUpdate($currentTick);
-    }
-
 
     protected function getInitialSizeInfo(): EntitySizeInfo {
-        return new EntitySizeInfo(1.3, 0.9);
+        return new EntitySizeInfo($this->isBaby() ? 0.7:1.4, $this->isBaby() ? 0.45:0.9);
     }
 
     public static function getNetworkTypeId(): string {
@@ -44,6 +29,24 @@ class EntityCow extends Living {
 
     public function getName(): string {
         return "Cow";
+    }
+
+    public function getDrops(): array{
+        if ($this->isOnFire() === true) {
+            return [
+                VanillaItems::STEAK()->setCount(mt_rand(1, 3)),
+                VanillaItems::LEATHER()->setCount(mt_rand(0, 2))
+            ];
+        } else {
+            return [
+                VanillaItems::RAW_BEEF()->setCount(mt_rand(1, 3)),
+                VanillaItems::LEATHER()->setCount(mt_rand(0, 2))
+            ];
+        }
+    }
+
+    public function getMaxHealth(): int {
+        return 10;
     }
 
 }
