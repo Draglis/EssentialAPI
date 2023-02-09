@@ -2,9 +2,9 @@
 <project version="4">
   <component name="PhpIncludePathManager">
     <include_path>
-      <path value="$PROJECT_DIR$/../../../PocketMine-MP-4.12.10/resources" />
-      <path value="$PROJECT_DIR$/../../../PocketMine-MP-4.12.10/src" />
-      <path value="$PROJECT_DIR$/../../../PocketMine-MP-4.12.10/vendor" />
+      <path value="C:/Projet/Pocketmine/PocketMine-MP-4.12.10/resources" />
+      <path value="C:/Projet/Pocketmine/PocketMine-MP-4.12.10/src" />
+      <path value="C:/Projet/Pocketmine/PocketMine-MP-4.12.10/vendor" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

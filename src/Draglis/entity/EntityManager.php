@@ -28,20 +28,14 @@ use Draglis\entity\animal\EntityWolf;
 use Draglis\entity\animal\frog\Tadpole;
 use Draglis\entity\animal\goat\Goat;
 use Draglis\entity\animal\horse\EntityHorseAbstract;
-use Draglis\EssentialAPI;
 use Draglis\item\CustomItemFactory;
 use Draglis\item\egg\CustomSpawnEgg;
-use Draglis\utils\NBT;
-use pocketmine\entity\Entity;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\scheduler\CancelTaskException;
-use pocketmine\scheduler\Task;
 use ReflectionException;
-use RuntimeException;
 
 class EntityManager {
 
     /**
+     * It registers all the entities that are in the game
      * @throws ReflectionException
      */
     public function initEntity() {
@@ -74,6 +68,13 @@ class EntityManager {
     }
 
     /**
+     * It registers a custom entity and a custom spawn egg
+     *
+     * @param string $className The class name of the entity.
+     * @param string $identifier The identifier of the entity.
+     * @param string $name The name of the entity.
+     * @param Closure|null $creationFunc A function that returns an instance of the entity.
+     * @param string behaviourId The behaviour id of the entity.
      * @throws ReflectionException
      */
     public function register(string $className, string $identifier, string $name, ?Closure $creationFunc = null, string $behaviourId = "") {
